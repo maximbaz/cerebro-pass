@@ -1,13 +1,12 @@
 {
-  "name": "cerebro-plugin",
-  "version": "1.0.0",
-  "description": "",
+  "name": "cerebro-pass",
+  "version": "0.1.0",
+  "description": "Cerebro plugin for pass.",
   "license": "MIT",
-  "repository": "KELiON/cerebro-plugin",
+  "repository": "jsantiagoh/cerebro-pass",
   "author": {
-    "name": "Alexandr Subbotin",
-    "email": "kelionweb@gmail.com",
-    "url": "asubbotin.ru"
+    "name": "Santiago H.",
+    "email": "jsantiagoh@gmail.com"
   },
   "engines": {
     "node": ">=4"
@@ -21,7 +20,8 @@
   "main": "dist/index.js",
   "keywords": [
     "cerebro",
-    "cerebro-plugin"
+    "cerebro-plugin",
+    "pass"
   ],
   "devDependencies": {
     "babel-cli": "^6.18.0",

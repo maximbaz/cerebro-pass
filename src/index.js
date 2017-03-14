@@ -37,10 +37,10 @@ const searchFiles = (dir, searchStr) => {
 const icon = require('./icon.png');
 
 const plugin = ({term, display, actions}) => {
-  console.log('term=' + term);
-  const parts = term.split(' ');
-  if ( parts.length > 1 && parts[0] === 'pass') {
-    let files = searchFiles(passwordStoreDir, parts[1]);
+  const match = term.match(/^pass\s(\w+)/);
+  if (match) {
+    const query = match[1];
+    let files = searchFiles(passwordStoreDir, query);
     const results = files.map(file => ({
       icon,
       title: file,

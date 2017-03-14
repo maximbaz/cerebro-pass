@@ -23,7 +23,7 @@ const searchFiles = (dir, searchStr) => {
         allFilesSync(filePath);
       } else {
         // Regular file
-        if (file.indexOf(searchStr) > -1) {
+        if (file.endsWith('.gpg') && file.indexOf(searchStr) > -1) {
           files.push(formatPath(filePath));
         }
       }

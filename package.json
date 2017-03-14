@@ -9,7 +9,7 @@
     "email": "jsantiagoh@gmail.com"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=5"
   },
   "scripts": {
     "build": "webpack && babili dist -d dist --compact --no-comments",

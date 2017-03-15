@@ -3,3 +3,5 @@
 Work in progress
 
 A [Cerebro](https://cerebroapp.com) plugin for [Pass](https://www.passwordstore.org/).
+
+![Screenshot](docs/screenshot.png)

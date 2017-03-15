@@ -23,7 +23,9 @@ const searchFiles = (dir, searchStr) => {
         allFilesSync(filePath);
       } else {
         // Regular file
-        if (file.endsWith('.gpg') && file.indexOf(searchStr) > -1) {
+        const match = file.match(new RegExp(`^.*${searchStr}.*\.gpg$`,'i'));
+        // if (file.endsWith('.gpg') && file.indexOf(searchStr) > -1) {
+        if (match) {
           files.push(formatPath(filePath));
         }
       }

@@ -25,7 +25,6 @@ const searchFiles = (dir, searchStr) => {
         const match = filePath.match(new RegExp(reStr ,'i'));
         if (match) {
           files.push(match[1]);
-          
         }
       }
     });

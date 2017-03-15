@@ -46,7 +46,7 @@ const plugin = ({term, display, actions}) => {
       title: file,
       subtitle: file,
       onSelect: (event) => {
-        exec('pass -c ' + file);
+        exec(`pass -c "${file}"`);
       }
     }));
     display(results);

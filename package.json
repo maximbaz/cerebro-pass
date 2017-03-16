@@ -12,6 +12,7 @@
     "node": ">=5"
   },
   "scripts": {
+    "test": "mocha",
     "build": "webpack && babili dist -d dist --compact --no-comments",
     "debug": "./scripts/debug",
     "debug:windows": "scripts\\debug.bat",
@@ -31,6 +32,7 @@
     "babili": "0.0.9",
     "cerebro-tools": "^0.1.0",
     "css-loader": "^0.26.0",
+    "mocha": "^3.2.0",
     "react": "^15.4.1",
     "rimraf": "^2.6.1",
     "style-loader": "^0.13.1",

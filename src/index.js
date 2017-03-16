@@ -3,12 +3,9 @@
 const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').exec;
+const regex = require('./regex');
 
 let passwordStoreDir = process.env.PASSWORD_STORE || `${process.env.HOME}/.password-store`;
-
-const escapeRegExp = (str) => {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-};
 
 const searchFiles = (dir, searchStr) => {
   let files = [];
@@ -21,8 +18,7 @@ const searchFiles = (dir, searchStr) => {
         allFilesSync(filePath);
       } else {
         // Regular file
-        const reStr = `^${escapeRegExp(passwordStoreDir)}.(.*${escapeRegExp(searchStr)}.*)\.gpg`;
-        const match = filePath.match(new RegExp(reStr ,'i'));
+        const match = regex.entryMatcher(filePath, passwordStoreDir, searchStr);
         if (match) {
           files.push(match[1]);
         }

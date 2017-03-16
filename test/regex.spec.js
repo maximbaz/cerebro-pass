@@ -33,4 +33,23 @@ describe('Regex', function() {
       assert(!match);
     });
   });
+
+  describe('Command Matcher', function() {
+    it('should not match "something else"', function() {
+      const match = regex.commandMatcher('something else');
+      assert(!match);
+    });
+
+    it('should match "pass query"', function() {
+      const match = regex.commandMatcher('pass query');
+      assert(match);
+      assert.equal('query', match[1]);
+    });
+
+    it('should match "pass      query"', function() {
+      const match = regex.commandMatcher('pass query');
+      assert(match);
+      assert.equal('query', match[1]);
+    });
+  });
 });

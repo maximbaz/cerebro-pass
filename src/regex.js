@@ -8,7 +8,12 @@ const entryMatcher = (file, passwordStoreDir, query) => {
   return file.match(new RegExp(reStr ,'i'));
 }
 
+const commandMatcher = (term) => {
+  return term.match(/^pass\s+(\w+)/);
+}
+
 module.exports = {
   escape,
-  entryMatcher
+  entryMatcher,
+  commandMatcher
 }

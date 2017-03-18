@@ -47,7 +47,7 @@ describe('Regex', function() {
     });
 
     it('should match "pass      query"', function() {
-      const match = regex.commandMatcher('pass query');
+      const match = regex.commandMatcher('pass      query');
       assert(match);
       assert.equal('query', match[1]);
     });

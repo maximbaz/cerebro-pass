@@ -51,4 +51,4 @@ const plugin = ({term, display, actions}) => {
 
 module.exports = {
   fn: plugin
-}
+};

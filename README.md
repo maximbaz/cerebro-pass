@@ -1,6 +1,6 @@
 # Cerebro Plugin for pass
 
-[![bitHound Overall Score](https://www.bithound.io/github/jsantiagoh/cerebro-pass/badges/score.svg)](https://www.bithound.io/github/jsantiagoh/cerebro-pass)
+[![CircleCI](https://circleci.com/gh/jsantiagoh/cerebro-pass.svg?style=svg)](https://circleci.com/gh/jsantiagoh/cerebro-pass) [![bitHound Overall Score](https://www.bithound.io/github/jsantiagoh/cerebro-pass/badges/score.svg)](https://www.bithound.io/github/jsantiagoh/cerebro-pass) [![Code Climate](https://codeclimate.com/github/jsantiagoh/cerebro-pass/badges/gpa.svg)](https://codeclimate.com/github/jsantiagoh/cerebro-pass)
 
 A [Cerebro](https://cerebroapp.com) plugin for [Pass](https://www.passwordstore.org/).
 

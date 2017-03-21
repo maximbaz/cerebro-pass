@@ -37,9 +37,9 @@ function search (baseDir, query, callback) {
   const globStr = `*.gpg`;
   glob(globStr, options, (err, files) => {
     if ( err ) {
-      callback(err);
+      return callback(err);
     } else {
-      callback(null, filterFiles(files, query));
+      return callback(null, filterFiles(files, query));
     }
   });
 }

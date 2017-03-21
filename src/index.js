@@ -8,8 +8,10 @@ let passwordStoreDir = process.env.PASSWORD_STORE || `${process.env.HOME}/.passw
 const handler = ({term, display, actions}) => {
   plugin.parse(term, (query) => {
     plugin.search(passwordStoreDir, query, (err, files) => {
-      const results = files.map(file => plugin.render(file, icon));
-      display(results);
+      if (!err) {
+        const results = files.map(file => plugin.render(file, icon));
+        display(results);
+      }
     });
   });
 };

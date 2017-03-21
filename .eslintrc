@@ -1,0 +1,18 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "mocha": true,
+    "node": true
+  },
+  "plugins": [
+    "import",
+    "react"
+  ],
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "../webpack.config.base.js"
+      }
+    }
+  }
+}

@@ -1,54 +1,22 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const exec = require('child_process').exec;
-const regex = require('./regex');
+const plugin = require('./plugin');
+const icon = require('./icon.png');
 
 let passwordStoreDir = process.env.PASSWORD_STORE || `${process.env.HOME}/.password-store`;
 
-const searchFiles = (dir, searchStr) => {
-  let files = [];
-  const allFilesSync = (dir) => {
-    fs.readdirSync(dir).forEach(file => {
-      const filePath = path.join(dir, file);
-
-      if (fs.statSync(filePath).isDirectory()) {
-        // Directory, go into it
-        allFilesSync(filePath);
-      } else {
-        // Regular file
-        const match = regex.entryMatcher(filePath, passwordStoreDir, searchStr);
-        if (match) {
-          files.push(match[1]);
-        }
+const handler = ({term, display, actions}) => {
+  const query = plugin.parse(term);
+  if (query) {
+    plugin.search(passwordStoreDir, query, (err, files) => {
+      if (!err) {
+        const results = files.map(file => plugin.render(file, icon));
+        display(results);
       }
     });
-  };
-
-  allFilesSync(passwordStoreDir);
-  return files;
-};
-
-const icon = require('./icon.png');
-
-const plugin = ({term, display, actions}) => {
-  const match = regex.commandMatcher(term);
-  if (match) {
-    const query = match[1];
-    let files = searchFiles(passwordStoreDir, query);
-    const results = files.map(file => ({
-      icon,
-      title: file,
-      subtitle: file,
-      onSelect: (event) => {
-        exec(`pass -c "${file}"`);
-      }
-    }));
-    display(results);
   }
 };
 
 module.exports = {
-  fn: plugin
+  fn: handler
 };

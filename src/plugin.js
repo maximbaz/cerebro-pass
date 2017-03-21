@@ -7,12 +7,12 @@ const glob = require('glob');
 const globToRegExp = require('glob-to-regexp');
 
 
-function parse (term, callback) {
+function parse (term) {
   const match = term.match(/^pass\s+(.+)/);
   if (match) {
-    const query = match[1];
-    callback(query);
+    return match[1];
   }
+  return null;
 }
 
 function render (file, icon) {

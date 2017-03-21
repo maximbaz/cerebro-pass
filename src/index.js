@@ -6,14 +6,15 @@ const icon = require('./icon.png');
 let passwordStoreDir = process.env.PASSWORD_STORE || `${process.env.HOME}/.password-store`;
 
 const handler = ({term, display, actions}) => {
-  plugin.parse(term, (query) => {
+  const query = plugin.parse(term);
+  if (query) {
     plugin.search(passwordStoreDir, query, (err, files) => {
       if (!err) {
         const results = files.map(file => plugin.render(file, icon));
         display(results);
       }
     });
-  });
+  }
 };
 
 module.exports = {

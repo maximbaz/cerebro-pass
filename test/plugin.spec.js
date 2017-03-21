@@ -8,23 +8,16 @@ const plugin = require('../src/plugin');
 describe('Plugin', () => {
   // Parse ---------------------------------------------
   describe('parse', () =>{
-    function assertParse (string, expected, done) {
-      plugin.parse(string, (query) => {
-        assert.equal(expected, query);
-        done();
-      });
-    }
-
-    it('should parse "pass query"', (done) => {
-      assertParse('pass query', 'query', done);
+    it('should parse "pass query"', () => {
+      assert.equal('query', plugin.parse('pass query'));
     });
 
-    it('should parse "pass       query"', (done) => {
-      assertParse('pass              query', 'query', done);
+    it('should parse "pass       query"', () => {
+      assert.equal('query', plugin.parse('pass        query'));
     });
 
-    it('should parse "pass p*git"', (done) => {
-      assertParse('pass p*git', 'p*git', done);
+    it('should parse "pass p*git"', () => {
+      assert.equal('p*git', plugin.parse('pass p*git'));
     });
   });
 
@@ -33,7 +26,6 @@ describe('Plugin', () => {
     function assertFound (expected, pattern, done) {
       plugin.search(cwd('test/files'), pattern, (err, files) => {
         if (err) {
-          console.log('error: ' + error);
           done(err);
         }
         assert.equal(expected.length, files.length);

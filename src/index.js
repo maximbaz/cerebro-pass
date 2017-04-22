@@ -6,14 +6,25 @@ const icon = require('./icon.png');
 let passwordStoreDir = process.env.PASSWORD_STORE || `${process.env.HOME}/.password-store`;
 
 const handler = ({term, display, actions}) => {
-  const query = plugin.parse(term);
-  if (query) {
-    plugin.search(passwordStoreDir, query, (err, files) => {
-      if (!err) {
-        const results = files.map(file => plugin.render(file, icon));
-        display(results);
-      }
-    });
+  const parsed = plugin.parse(term);
+  if (parsed) {
+    if(parsed.action === 'grep') {
+      plugin.search(passwordStoreDir, parsed.query, (err, files) => {
+        if (!err) {
+          const results = files.map((file) => {
+            const entry = file.substring(0,file.length - 4)
+            const action = `pass -c "${entry}"`
+            return plugin.render(entry, action, icon)
+          });
+          display(results);
+        }
+      });
+    } else if (parsed.action === 'generate'){
+      const action = parsed.query.length > 1 ?
+        `pass generate -c "${parsed.query}"` : ""
+
+      display([plugin.render(`Generate ${parsed.query}...`, action, icon)])
+    }
   }
 };
 

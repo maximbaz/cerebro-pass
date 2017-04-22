@@ -2,22 +2,25 @@
 
 const assert = require('assert');
 const cwd = require('cwd');
-
 const plugin = require('../src/plugin');
 
 describe('Plugin', () => {
   // Parse ---------------------------------------------
   describe('parse', () =>{
     it('should parse "pass query"', () => {
-      assert.equal('query', plugin.parse('pass query'));
+      assert.equal('query', plugin.parse('pass query').query);
     });
 
     it('should parse "pass       query"', () => {
-      assert.equal('query', plugin.parse('pass        query'));
+      assert.equal('query', plugin.parse('pass        query').query);
     });
 
     it('should parse "pass p*git"', () => {
-      assert.equal('p*git', plugin.parse('pass p*git'));
+      assert.equal('p*git', plugin.parse('pass p*git').query);
+    });
+
+    it('should parse "pass generate test.com/abc"', () => {
+      assert.equal('generate', plugin.parse('pass generate test.com/abc').action);
     });
   });
 
@@ -43,10 +46,14 @@ describe('Plugin', () => {
     });
   });
 
-  // Search ---------------------------------------------
+  // Render ---------------------------------------------
   describe('render', () => {
     it('should remove extension', () => {
-      const rendered = plugin.render('personal/github/personal_login.gpg');
+      const file = 'personal/github/personal_login.gpg'
+      const entry = file.substring(0,file.length - 4)
+      const action = `pass -c "${entry}"`
+      const rendered = plugin.render(entry, action)
+
       assert.equal('personal/github/personal_login', rendered.title);
       assert.equal('personal/github/personal_login', rendered.subtitle);
     });

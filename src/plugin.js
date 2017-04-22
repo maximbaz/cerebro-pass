@@ -8,21 +8,29 @@ const globToRegExp = require('glob-to-regexp');
 
 
 function parse (term) {
-  const match = term.match(/^pass\s+(.+)/);
-  if (match) {
-    return match[1];
+  const match = term.match(/^pass\s+(.+)/)[1];
+
+  if (match.split(' ')[1] && match.split(' ')[0].indexOf('gen') > -1){
+    return {
+      action: 'generate',
+      query: match.split(' ')[1] || ''
+    }
+  } else if (match) {
+    return {
+      action: 'grep',
+      query: match
+    }
   }
   return null;
 }
 
-function render (file, icon) {
-  const entry = file.substring(0,file.length - 4);
+function render (entry, action, icon) {
   return {
     icon,
     title: entry,
     subtitle: entry,
     onSelect: (event) => {
-      exec(`pass -c "${entry}"`);
+      exec(action);
     }
   };
 }

@@ -1,6 +1,6 @@
 {
   "name": "cerebro-pass",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Cerebro plugin for pass.",
   "license": "MIT",
   "repository": "jsantiagoh/cerebro-pass",

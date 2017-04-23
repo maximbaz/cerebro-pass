@@ -8,7 +8,13 @@ const globToRegExp = require('glob-to-regexp');
 
 
 function parse (term) {
-  const match = term.match(/^pass\s+(.+)/)[1];
+  let match
+
+  try {
+    match = term.match(/^pass\s+(.+)/)[1]
+  } catch (error) {
+    return null
+  }
 
   if (match.split(' ')[1] && match.split(' ')[0].indexOf('gen') > -1){
     return {

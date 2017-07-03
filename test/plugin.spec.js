@@ -11,6 +11,10 @@ describe("Plugin", () => {
       assert.equal("query", plugin.parse("pass query").query);
     });
 
+    it('should parse "otp query"', () => {
+      assert.equal("query", plugin.parse("otp query").query);
+    });
+
     it('should parse "pass       query"', () => {
       assert.equal("query", plugin.parse("pass        query").query);
     });
@@ -59,7 +63,7 @@ describe("Plugin", () => {
     it("should remove extension", () => {
       const file = "personal/github/personal_login.gpg";
       const entry = file.substring(0, file.length - 4);
-      const action = `pass -c "${entry}"`;
+      const action = `pass show -c "${entry}"`;
       const rendered = plugin.render(entry, action);
 
       assert.equal("personal/github/personal_login", rendered.title);

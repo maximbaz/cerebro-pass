@@ -14,15 +14,18 @@ const handler = ({ term, display, actions }) => {
 
   switch (parsed.action) {
     case "pass":
+    case "otp":
       plugin.search(passwordStoreDir, parsed.query, (err, files) => {
         if (err) {
           console.error(err);
           return;
         }
 
+        const commands = { pass: "show", otp: "otp" };
         const results = files.map(file => {
+          const command = commands[parsed.action];
           const entry = file.substring(0, file.length - 4);
-          const action = `pass -c "${entry}"`;
+          const action = `pass ${command} -c "${entry}"`;
           return plugin.render(entry, action, icon);
         });
 

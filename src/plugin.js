@@ -6,7 +6,7 @@ const exec = require("child_process").exec;
 const glob = require("glob");
 const globToRegExp = require("glob-to-regexp");
 
-const AVAILABLE_ACTIONS = ["pass", "passgen"];
+const AVAILABLE_ACTIONS = ["pass", "otp", "passgen"];
 
 function parse(term) {
   const match = term.match(/^([^\s]+)\s+(.+)$/);

@@ -9,7 +9,7 @@ let passwordStoreDir =
 const handler = ({ term, display, actions }) => {
   const parsed = plugin.parse(term);
   if (parsed) {
-    if (parsed.action === "grep") {
+    if (parsed.action === "pass") {
       plugin.search(passwordStoreDir, parsed.query, (err, files) => {
         if (!err) {
           const results = files.map(file => {
@@ -20,7 +20,7 @@ const handler = ({ term, display, actions }) => {
           display(results);
         }
       });
-    } else if (parsed.action === "generate") {
+    } else if (parsed.action === "passgen") {
       const action = parsed.query.length > 1
         ? `pass generate -c "${parsed.query}"`
         : "";

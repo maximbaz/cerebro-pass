@@ -6,27 +6,20 @@ const exec = require("child_process").exec;
 const glob = require("glob");
 const globToRegExp = require("glob-to-regexp");
 
-function parse(term) {
-  let match;
+const AVAILABLE_ACTIONS = ["pass", "passgen"];
 
-  try {
-    match = term.match(/^pass\s+(.+)/)[1];
-  } catch (error) {
+function parse(term) {
+  const match = term.match(/^([^\s]+)\s+(.+)$/);
+  if (!match) {
     return null;
   }
 
-  if (match.split(" ")[1] && match.split(" ")[0].indexOf("gen") > -1) {
-    return {
-      action: "generate",
-      query: match.split(" ")[1] || ""
-    };
-  } else if (match) {
-    return {
-      action: "grep",
-      query: match
-    };
+  const [_, action, query] = match;
+  if (!AVAILABLE_ACTIONS.includes(action)) {
+    return null;
   }
-  return null;
+
+  return { action, query };
 }
 
 function render(entry, action, icon) {

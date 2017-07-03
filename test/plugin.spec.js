@@ -19,11 +19,8 @@ describe("Plugin", () => {
       assert.equal("p*git", plugin.parse("pass p*git").query);
     });
 
-    it('should parse "pass generate test.com/abc"', () => {
-      assert.equal(
-        "generate",
-        plugin.parse("pass generate test.com/abc").action
-      );
+    it('should parse "passgen test.com/abc"', () => {
+      assert.equal("passgen", plugin.parse("passgen test.com/abc").action);
     });
   });
 

@@ -34,7 +34,8 @@ function render(entry, action, icon) {
 }
 
 function filterFiles(files, query) {
-  const re = globToRegExp(`*${query}*`);
+  const globQuery = `*${query.trim().replace(/\s+/g, "*")}*`;
+  const re = globToRegExp(globQuery);
   return files.filter(file => re.test(file));
 }
 

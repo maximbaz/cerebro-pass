@@ -19,6 +19,10 @@ describe("Plugin", () => {
       assert.equal("p*git", plugin.parse("pass p*git").query);
     });
 
+    it('should parse "pass p git"', () => {
+      assert.equal("p git", plugin.parse("pass p git").query);
+    });
+
     it('should parse "passgen test.com/abc"', () => {
       assert.equal("passgen", plugin.parse("passgen test.com/abc").action);
     });
@@ -43,6 +47,10 @@ describe("Plugin", () => {
 
     it("should match p*git", done => {
       assertFound(["personal/github/personal_login.gpg"], "p*git", done);
+    });
+
+    it("should match p git", done => {
+      assertFound(["personal/github/personal_login.gpg"], "p git", done);
     });
   });
 

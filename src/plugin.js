@@ -19,7 +19,7 @@ function parse(term) {
     return null;
   }
 
-  return { action, query };
+  return { action, query: query.trim() };
 }
 
 function render(entry, action, icon) {
@@ -34,7 +34,7 @@ function render(entry, action, icon) {
 }
 
 function filterFiles(files, query) {
-  const globQuery = `*${query.trim().replace(/\s+/g, "*")}*`;
+  const globQuery = `*${query.replace(/\s+/g, "*")}*`;
   const re = globToRegExp(globQuery);
   return files.filter(file => re.test(file));
 }

@@ -28,23 +28,23 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.2.0",
-    "babel-loader": "^6.2.8",
+    "babel-loader": "^7.1.1",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-react-jsx": "^6.8.0",
-    "babili": "0.0.12",
+    "babili": "^0.1.4",
     "cerebro-tools": "^0.1.0",
-    "css-loader": "^0.27.3",
+    "css-loader": "^0.28.4",
     "cwd": "^0.10.0",
-    "eslint": "^3.18.0",
+    "eslint": "^4.1.1",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-react": "^7.1.0",
     "glob": "^7.1.1",
     "glob-to-regexp": "^0.3.0",
     "mocha": "^3.2.0",
     "react": "^15.4.1",
     "rimraf": "^2.6.1",
-    "style-loader": "^0.14.1",
+    "style-loader": "^0.18.2",
     "url-loader": "^0.5.7",
-    "webpack": "2.2.1"
+    "webpack": "^3.0.0"
   }
 }

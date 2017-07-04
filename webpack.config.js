@@ -1,45 +1,49 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require("webpack");
+const path = require("path");
 
 module.exports = {
   entry: {
-    index: './src/index'
+    index: path.resolve("./src/index")
   },
   output: {
-    path: './dist',
-    libraryTarget: 'commonjs2',
-    filename: 'index.js'
+    path: path.resolve("./dist"),
+    libraryTarget: "commonjs2",
+    filename: "index.js"
   },
   resolve: {
-    extensions: ['.js'],
-    modules: [
-      path.resolve('./src'),
-      path.resolve('./node_modules')
-    ]
+    extensions: [".js"],
+    modules: [path.resolve("./src"), path.resolve("./node_modules")]
   },
-  target: 'electron-renderer',
+  target: "electron-renderer",
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      use: {
-        loader: 'babel-loader'
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: {
+          loader: "babel-loader"
+        },
+        exclude: /node_modules/
       },
-      exclude: /node_modules/
-    }, {
-      test: /\.css$/,
-      use: [{
-        loader: 'style-loader'
-      }, {
-        loader: 'css-loader',
-        query: {
-          modules: true
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            query: {
+              modules: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.png$/,
+        use: {
+          loader: "url-loader"
         }
-      }]
-    }, {
-      test: /\.png$/,
-      use: {
-        loader: 'url-loader'
       }
-    }]
+    ]
   }
 };

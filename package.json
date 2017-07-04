@@ -1,9 +1,9 @@
 {
   "name": "cerebro-pass",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Cerebro plugin for pass.",
   "license": "MIT",
-  "repository": "jsantiagoh/cerebro-pass",
+  "repository": "maximbaz/cerebro-pass",
   "author": {
     "name": "Santiago H.",
     "email": "jsantiagoh@gmail.com"

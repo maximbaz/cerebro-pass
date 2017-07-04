@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "build": "webpack && babili dist -d dist --compact --no-comments",
+    "build": "webpack && uglifyjs ./dist/index.js -o ./dist/index.js --mangle",
     "debug": "./scripts/debug",
     "debug:windows": "scripts\\debug.bat",
     "prepublish": "rimraf ./dist && npm run build",
@@ -31,7 +31,6 @@
     "babel-loader": "^7.1.1",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-react-jsx": "^6.8.0",
-    "babili": "^0.1.4",
     "cerebro-tools": "^0.1.0",
     "css-loader": "^0.28.4",
     "cwd": "^0.10.0",
@@ -44,6 +43,7 @@
     "react": "^15.4.1",
     "rimraf": "^2.6.1",
     "style-loader": "^0.18.2",
+    "uglify-es": "^3.0.23",
     "url-loader": "^0.5.7",
     "webpack": "^3.0.0"
   }

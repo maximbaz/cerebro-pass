@@ -7,8 +7,9 @@ A [Cerebro](https://cerebroapp.com) plugin for [pass](https://www.passwordstore.
 ### Available commands:
 
 - Copy a password: `pass <query>`
-- Copy a 2FA code: `otp <query>`
 - Generate a password: `passgen <path>`
+- Copy a 2FA code: `otp <query>`
+- Add 2FA to an account: `otpadd <secret-code> <path>`
 
 ### Features:
 - Narrow down the pass/otp search by writing multiple query words separated with a space: 

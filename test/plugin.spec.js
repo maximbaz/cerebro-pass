@@ -7,28 +7,25 @@ const plugin = require("../src/plugin");
 describe("Plugin", () => {
   // Parse ---------------------------------------------
   describe("parse", () => {
-    it('should parse "pass query"', () => {
-      assert.equal("query", plugin.parse("pass query").query);
+    for (let action of ["pass", "passgen", "otp", "otpadd"]) {
+      it(`should parse "${action}" action`, () => {
+        assert.equal(action, plugin.parse(`${action} query`).action);
+      });
+    }
+
+    it("should not parse unknown action", () => {
+      assert.equal(null, plugin.parse("passbla query"));
     });
 
-    it('should parse "otp query"', () => {
-      assert.equal("query", plugin.parse("otp query").query);
+    it("should parse query", () => {
+      assert.equal("one two three", plugin.parse("pass one two three").query);
     });
 
-    it('should parse "pass       query"', () => {
-      assert.equal("query", plugin.parse("pass        query").query);
-    });
-
-    it('should parse "pass p*git"', () => {
-      assert.equal("p*git", plugin.parse("pass p*git").query);
-    });
-
-    it('should parse "pass p git"', () => {
-      assert.equal("p git", plugin.parse("pass p git").query);
-    });
-
-    it('should parse "passgen test.com/abc"', () => {
-      assert.equal("passgen", plugin.parse("passgen test.com/abc").action);
+    it("should ignore initial spaces when parsing query", () => {
+      assert.equal(
+        "one two three   ",
+        plugin.parse("pass    one two three   ").query
+      );
     });
   });
 
@@ -64,10 +61,14 @@ describe("Plugin", () => {
       const file = "personal/github/personal_login.gpg";
       const entry = file.substring(0, file.length - 4);
       const action = `pass show -c "${entry}"`;
-      const rendered = plugin.render(entry, action);
+      const rendered = plugin.render(
+        entry,
+        "(will copy password to clipboard)",
+        action
+      );
 
       assert.equal("personal/github/personal_login", rendered.title);
-      assert.equal("personal/github/personal_login", rendered.subtitle);
+      assert.equal("(will copy password to clipboard)", rendered.subtitle);
     });
   });
 });

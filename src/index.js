@@ -14,30 +14,77 @@ const handler = ({ term, display, actions }) => {
 
   switch (parsed.action) {
     case "pass":
+      searchDisplay(
+        "password",
+        display,
+        parsed.query.trim(),
+        entry => `pass show -c ${entry}`
+      );
+      break;
+
     case "otp":
-      plugin.search(passwordStoreDir, parsed.query, (err, files) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-
-        const commands = { pass: "show", otp: "otp" };
-        const results = files.map(file => {
-          const command = commands[parsed.action];
-          const entry = file.substring(0, file.length - 4);
-          const action = `pass ${command} -c "${entry}"`;
-          return plugin.render(entry, action, icon);
-        });
-
-        display(results);
-      });
+      searchDisplay(
+        "code",
+        display,
+        parsed.query.trim(),
+        entry => `pass otp -c ${entry}`
+      );
       break;
 
-    case "passgen":
-      const action = `pass generate -c "${parsed.query}"`;
-      display([plugin.render(`Generate ${parsed.query}...`, action, icon)]);
+    case "passgen": {
+      const action = `pass generate -c "${parsed.query.trim()}"`;
+      display([
+        plugin.render(
+          `Generate password for: ${parsed.query.trim()}`,
+          "(will save the password and put it to clipboard)",
+          action,
+          icon
+        )
+      ]);
       break;
+    }
+
+    case "otpadd": {
+      const splitIndex = parsed.query.indexOf(" ");
+      if (splitIndex === -1) {
+        display([
+          plugin.render(
+            `Paste OTP secret key: ${parsed.query}`,
+            "(remove spaces if any)"
+          )
+        ]);
+        break;
+      }
+
+      const secret = parsed.query.substr(0, splitIndex);
+      const path = parsed.query.substr(splitIndex + 1);
+      const otpauthUri = `otpauth://totp/totp-secret?secret=${secret}&issuer=totp-secret`;
+      const action = entry =>
+        `echo '${otpauthUri}' | pass otp append '${entry}'; pass otp -c '${entry}'`;
+      searchDisplay("confirmation code", display, path, action);
+    }
   }
+};
+
+const searchDisplay = (target, display, path, action) => {
+  plugin.search(passwordStoreDir, path, (err, files) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const results = files.map(file => {
+      const entry = file.substring(0, file.length - 4);
+      return plugin.render(
+        entry,
+        `(will copy ${target} to clipboard)`,
+        action(entry),
+        icon
+      );
+    });
+
+    display(results);
+  });
 };
 
 module.exports = {

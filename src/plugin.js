@@ -6,27 +6,28 @@ const exec = require("child_process").exec;
 const glob = require("glob");
 const globToRegExp = require("glob-to-regexp");
 
-const AVAILABLE_ACTIONS = ["pass", "otp", "passgen"];
+const AVAILABLE_ACTIONS = ["pass", "passgen", "otp", "otpadd"];
 
 function parse(term) {
-  const match = term.match(/^([^\s]+)\s+(.+)$/);
+  const match = term.match(/^([^\s]+)\s+(.+)?$/);
   if (!match) {
     return null;
   }
 
-  const [_, action, query] = match;
+  const action = match[1];
+  const query = match[2] || "";
   if (!AVAILABLE_ACTIONS.includes(action)) {
     return null;
   }
 
-  return { action, query: query.trim() };
+  return { action, query };
 }
 
-function render(entry, action, icon) {
+function render(title, subtitle, action, icon) {
   return {
     icon,
-    title: entry,
-    subtitle: entry,
+    title: title,
+    subtitle: subtitle,
     onSelect: event => {
       exec(action);
     }

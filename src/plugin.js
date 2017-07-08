@@ -30,7 +30,7 @@ function render(title, subtitle, action) {
     title: title,
     subtitle: subtitle,
     onSelect: event => {
-      exec(action);
+      exec(action());
     }
   };
 }

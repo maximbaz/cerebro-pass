@@ -5,6 +5,8 @@ const plugin = require("./plugin");
 let passwordStoreDir =
   process.env.PASSWORD_STORE || `${process.env.HOME}/.password-store`;
 
+const usedEntries = {};
+
 const handler = ({ term, display, actions }) => {
   const parsed = plugin.parse(term);
   if (!parsed) {
@@ -35,7 +37,10 @@ const handler = ({ term, display, actions }) => {
         plugin.render(
           `Generate password for: ${parsed.query.trim()}`,
           "(will save the password and put it to clipboard)",
-          `pass generate -c "${parsed.query.trim()}"`
+          prepareEntryAction(
+            parsed.query.trim(),
+            entry => `pass generate -c "${entry}"`
+          )
         )
       ]);
       break;
@@ -46,7 +51,8 @@ const handler = ({ term, display, actions }) => {
         display([
           plugin.render(
             `Paste OTP secret key: ${parsed.query}`,
-            "(remove spaces if any)"
+            "(remove spaces if any)",
+            () => undefined
           )
         ]);
         break;
@@ -70,17 +76,26 @@ const searchDisplay = (target, display, path, action) => {
       return;
     }
 
-    const results = files.map(file => {
-      const entry = file.substring(0, file.length - 4);
-      return plugin.render(
-        entry,
-        `(will copy ${target} to clipboard)`,
-        action(entry)
-      );
-    });
+    const results = files
+      .map(file => file.substring(0, file.length - 4))
+      .sort((a, b) => (usedEntries[b] || 0) - (usedEntries[a] || 0))
+      .map(entry => {
+        return plugin.render(
+          entry,
+          `(will copy ${target} to clipboard)`,
+          prepareEntryAction(entry, action)
+        );
+      });
 
     display(results);
   });
+};
+
+const prepareEntryAction = (entry, action) => {
+  return () => {
+    usedEntries[entry] = (usedEntries[entry] || 0) + 1;
+    return action(entry);
+  };
 };
 
 module.exports = {

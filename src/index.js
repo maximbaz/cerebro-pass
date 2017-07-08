@@ -1,7 +1,6 @@
 "use strict";
 
 const plugin = require("./plugin");
-const icon = require("./icon.png");
 
 let passwordStoreDir =
   process.env.PASSWORD_STORE || `${process.env.HOME}/.password-store`;
@@ -31,18 +30,15 @@ const handler = ({ term, display, actions }) => {
       );
       break;
 
-    case "passgen": {
-      const action = `pass generate -c "${parsed.query.trim()}"`;
+    case "passgen":
       display([
         plugin.render(
           `Generate password for: ${parsed.query.trim()}`,
           "(will save the password and put it to clipboard)",
-          action,
-          icon
+          `pass generate -c "${parsed.query.trim()}"`
         )
       ]);
       break;
-    }
 
     case "otpadd": {
       const splitIndex = parsed.query.indexOf(" ");
@@ -62,6 +58,7 @@ const handler = ({ term, display, actions }) => {
       const action = entry =>
         `echo '${otpauthUri}' | pass otp append '${entry}'; pass otp -c '${entry}'`;
       searchDisplay("confirmation code", display, path, action);
+      break;
     }
   }
 };
@@ -78,8 +75,7 @@ const searchDisplay = (target, display, path, action) => {
       return plugin.render(
         entry,
         `(will copy ${target} to clipboard)`,
-        action(entry),
-        icon
+        action(entry)
       );
     });
 

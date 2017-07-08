@@ -1,6 +1,7 @@
 "use strict";
 
 const plugin = require("./plugin");
+const icon = require("./icon.png");
 
 let passwordStoreDir =
   process.env.PASSWORD_STORE || `${process.env.HOME}/.password-store`;
@@ -35,6 +36,7 @@ const handler = ({ term, display, actions }) => {
     case "passgen":
       display([
         plugin.render(
+          icon,
           `Generate password for: ${parsed.query.trim()}`,
           "(will save the password and put it to clipboard)",
           prepareEntryAction(
@@ -50,6 +52,7 @@ const handler = ({ term, display, actions }) => {
       if (splitIndex === -1) {
         display([
           plugin.render(
+            icon,
             `Paste OTP secret key: ${parsed.query}`,
             "(remove spaces if any)",
             () => undefined
@@ -81,6 +84,7 @@ const searchDisplay = (target, display, path, action) => {
       .sort((a, b) => (usedEntries[b] || 0) - (usedEntries[a] || 0))
       .map(entry => {
         return plugin.render(
+          icon,
           entry,
           `(will copy ${target} to clipboard)`,
           prepareEntryAction(entry, action)

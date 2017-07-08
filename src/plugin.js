@@ -5,7 +5,6 @@ const path = require("path");
 const exec = require("child_process").exec;
 const glob = require("glob");
 const globToRegExp = require("glob-to-regexp");
-const icon = require("./icon.png");
 
 const AVAILABLE_ACTIONS = ["pass", "passgen", "otp", "otpadd"];
 
@@ -24,11 +23,11 @@ function parse(term) {
   return { action, query };
 }
 
-function render(title, subtitle, action) {
+function render(icon, title, subtitle, action) {
   return {
     icon,
-    title: title,
-    subtitle: subtitle,
+    title,
+    subtitle,
     onSelect: event => {
       exec(action());
     }

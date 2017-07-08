@@ -62,6 +62,7 @@ describe("Plugin", () => {
       const entry = file.substring(0, file.length - 4);
       const action = `pass show -c "${entry}"`;
       const rendered = plugin.render(
+        undefined,
         entry,
         "(will copy password to clipboard)",
         action
